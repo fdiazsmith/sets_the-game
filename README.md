@@ -1,7 +1,7 @@
 # sets the game
 
 
-to run download meteor.js
+To run, start by download meteor.js
 
 ```bash
 curl https://install.meteor.com/ | sh

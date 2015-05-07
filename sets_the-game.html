@@ -1,14 +1,27 @@
 <head>
-  <title>sets_the-game</title>
+  <title>Sets – the game</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>Sets: {{numberOfSets}} </h1>
+	<!-- {{> sets_grid}} -->
 
-  {{> hello}}
+
+	{{> sets_grid}}
+
+
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="sets_grid">
+	<section id="grid" class="">
+		<tbody >
+		  {{#each cardsInDeck}}
+			  {{> card}}
+			{{/each}}
+		</tbody>
+	</section>
+</template>
+
+<template name="card">
+	<div class="card {{#if selected}} selected {{/if}}"><div class="{{color}} {{shape}} {{fill}}"></div></div>
 </template>

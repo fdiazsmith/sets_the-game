@@ -1,0 +1,265 @@
+// @import './mixins.import.less';
+@import url('./mixins.import.less');
+
+@shape-width : 40px;
+@blue: rgba(20, 10, 250, 1);
+@orange: rgba(205, 80, 50, 1);
+@green: rgba(25, 250, 50, 1);
+@white: white;
+
+@border-width: 3px;
+
+
+*{
+	margins: 0;
+}
+
+body{
+	
+}
+
+#grid{
+	// background-color: @white;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	 align-content: space-between;
+}
+.card{
+		position: relative;
+		width: 80px;
+		height:80px;
+		margin: 2% 10%;
+		// background-color: fadeout(red, 10%);
+		display: inline-block;
+		// background-color: orange;
+		flex-basis:2;
+		flex-grow: 2;
+		
+		div{
+			
+			// background-color: green;
+			pointer-events: none;
+			margin: 0 auto;
+			.transition( all 400ms ease);
+			&.x{
+				position: relative;
+				width: 60px ;//+ @border-width;
+				height:60px;
+				background-color: transparent;
+				margin: -68px auto 0 auto;
+				top: 80px;
+				&:before{//, &:after {
+				    content: "";
+				    position: absolute;
+				    top: 0;
+				    left: 0;
+				    width: 50px;
+				    height: 50px;
+				    border: @border-width solid green;
+			     .border-radius(0% 50% 0 50%);
+			     // .rotate(-45deg);
+				}
+				// &:after {
+				//     left: auto;
+				//     // right: 0;
+				//     .border-radius(100% 100% 100% 0);
+				//     .rotate(45deg);
+				// }
+				&.hashed{
+					&.green{
+						&:after {
+							background: repeating-linear-gradient(0deg,@green,@green @border-width,transparent @border-width, transparent 6px );
+						}
+						&:before{
+							background: repeating-linear-gradient(90deg,@green,@green @border-width,transparent @border-width, transparent 6px );
+						}
+					}
+					&.orange{
+						&:after {
+							background: repeating-linear-gradient(0deg,@orange,@orange @border-width,transparent @border-width, transparent 6px );
+						}
+						&:before{
+							background: repeating-linear-gradient(90deg,@orange,@orange @border-width,transparent @border-width, transparent 6px );
+						}
+					}
+					&.blue{
+						&:after {
+							background: repeating-linear-gradient(0deg,@blue,@blue @border-width,transparent @border-width, transparent 6px );
+						}
+						&:before{
+							background: repeating-linear-gradient(90deg,@blue,@blue @border-width,transparent @border-width, transparent 6px );
+						}
+					}
+				}
+				&.green{
+					&:before, &:after {
+					 border-color: @green;
+					}
+				}
+				&.orange{
+					&:before, &:after {
+					 border-color: @orange;
+					}
+				}
+				&.blue{
+					&:before, &:after {
+					 border-color: @blue;
+					}
+				}
+				&.solid{
+					&.green{
+						&:before, &:after {
+							background-color: @green;
+						}
+					}
+					&.orange{
+						&:before, &:after {
+							background-color: @orange;
+						}
+					}
+					&.blue{
+						&:before, &:after {
+							background-color: @blue;
+						}
+					}
+				}
+			}
+			&.circle{
+				.border-radius(45px);
+				width: 60px;
+				height: 60px;
+				// top:40px;
+				margin-top: 7.5px;
+				border: @border-width solid transparent;
+				&.blue{
+					border: @border-width solid @blue;
+				}
+				&.green{
+					border: @border-width solid @green;
+				}
+				&.orange{
+					border: @border-width solid @orange;
+				}
+				&.hollow{
+					background-color: transparent;
+				}
+				&.solid{
+					&.blue{
+						background-color: @blue;
+					}
+					&.green{
+						background-color: @green;
+					}
+					&.orange{
+						background-color: @orange;
+					}
+				}
+				&.hashed{
+					&.blue{
+						background: repeating-linear-gradient(50deg,@blue,@blue @border-width,transparent @border-width,transparent 6px);
+					}
+					&.green{
+						background: repeating-linear-gradient(50deg,@green,@green @border-width,transparent @border-width,transparent 6px);
+					}
+					&.orange{
+						background: repeating-linear-gradient(50deg,@orange,@orange @border-width,transparent @border-width,transparent 6px);
+					}
+				}
+			}
+			&.diamond{
+				width: 40px;
+				height: 40px;
+				margin-top: 18px;
+				border: @border-width solid transparent;
+				background-color: transparent;
+				.transform( skew(0deg) rotate(-45deg) );
+				&.hashed{
+					&.blue{
+						background: repeating-linear-gradient(30deg,@blue,@blue @border-width,transparent @border-width,transparent 6px);
+					}	
+					&.green{
+						background: repeating-linear-gradient(30deg,@green,@green @border-width,transparent @border-width,transparent 6px);
+					}	
+					&.orange{
+						background: repeating-linear-gradient(30deg,@orange,@orange @border-width,transparent @border-width,transparent 6px);
+					}	
+				}
+				&.green{
+					border-color: @green;
+				}
+				&.blue{
+					border-color: @blue;
+				}
+				&.orange{
+					border-color: @orange;
+				}
+				&.solid{
+					&.green{
+						background-color: @green;
+					}
+					&.blue{
+						background-color: @blue;
+					}
+					&.orange{
+						background-color: @orange;
+					}
+				}
+			}
+		}
+		&.selected{
+				&:before{
+			    content: "";
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 80px;
+			    height: 80px;
+			    .border-radius(25%);
+			    // .box-shadow( 0px 0px 10px 4px  gray);
+			    // .radial-gradient(50%, 50%, circle, cover, white, 50%, gray, 100%);
+			    // background-image: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 0%,rgba(0,0,0,0.87) 54%,rgba(0,0,0,1) 62%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%);
+			    border: 3px gray solid;
+					// background-color: gray;
+					opacity: .4;
+					z-index: -1;
+				}
+			}
+}
+
+			// &.x{
+			// 	position: relative;
+			// 	width: 80px;
+			// 	height: 50px;
+			// 	background-color: transparent;
+			// 	margin: 0 auto;
+			// 	&:before, &:after {
+			// 	    content: "";
+			// 	    position: absolute;
+			// 	    top: 0;
+			// 	    left: 0;
+			// 	    width: 30px;
+			// 	    height: 30px;
+			// 	    border: @border-width solid red;
+			// 	     .border-radius(100% 100% 0 100%);
+			// 	     .rotate(-45deg);
+			// 	}
+			// 	&:after {
+			// 	    left: auto;
+			// 	    right: 0;
+			// 	    .border-radius(100% 100% 100% 0);
+			// 	    .rotate(45deg);
+			// 	}
+			// }
+
+			// &.x{
+			// 	border-left: 20px solid transparent;
+			// 	border-right: 20px solid transparent;
+			// 	border-bottom: 40px solid red;
+			// 	background-color: transparent;
+			// 	.border-radius(100%);
+
+			// 	width: 0;
+			// 	height: 0;

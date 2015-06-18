@@ -42,6 +42,21 @@ if (Meteor.isClient) {
     }
   });
 
+  body.events({
+    "click #add-card": function(e){
+      console.log("adding Card", e.target );
+      Game.insert({ color: colors[randomPropertyAssigment],
+                    shape: shapes[randomPropertyAssigment],
+                    fill: fills[randomPropertyAssigment],
+                    selected: false,
+                    createdAt: new Date() } );
+    },
+    "click #remove-card": function(){
+      console.log("removing  Card"    );
+      Game.remove(  Game.find({}, {sort: {createdAt: -1}}).fetch()[0]._id );
+    },
+  });
+
   grid.helpers({
     // cardsInDeck: [
     //   {color: colors[randomPropertyAssigment()]},
@@ -61,27 +76,6 @@ if (Meteor.isClient) {
   });
 
 
-  // grid.events({
-  //   'click': function(e){
-  //     // increment the counter when button is clickedf
-  //     // Session.set('counter', Session.get('counter') + 1);
-  //     var some = this;//.$('div');
-  //     console.log("clicked on the grid", sets, grid.elems, some, e,"dd",e.target.card );
-  //   }
-
-  // });
-
-  // grid.onCreated(function(){
-  // // for (var i = 9 - 1; i >= 0; i--) {
-  // //   Game.insert({
-  // //     color : colors[randomPropertyAssigment() ],
-  // //     shape : shapes[randomPropertyAssigment() ],
-  // //     fill  : fills[ randomPropertyAssigment() ],
-  // //     createdAt: new Date() // c
-  // //   });
-  
-  // });
-
   
   //  // db.cardsInDeck.insert({color : "green",shape : "x",fill  : "solid", createdAt: new Date() });
   cardsSelected = 0;
@@ -89,16 +83,7 @@ if (Meteor.isClient) {
   grid.onRendered(function(){
   });
   
-
-
   card.helpers({
-    // color: function () {
-    //   var  _color = colors[randomPropertyAssigment()]
-    //   Game.update(this._id, {$set: {
-    //     color: _color
-    //   }});
-    //   return _color;
-    // }    
   });
 
 

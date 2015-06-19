@@ -9,7 +9,9 @@
 
 	{{> sets_grid}}
 
-<button id="add-card">Add one Card</button><button id="remove-card">Remove one card</button>
+<button id="add-card">Add one Card</button>
+<button id="remove-card">Remove one card</button>
+<button type="button" id="pattern-check">Check for Patterns</button>
 </body>
 
 <template name="sets_grid">
@@ -23,5 +25,7 @@
 </template>
 
 <template name="card">
-	<div class="card {{#if selected}} selected {{/if}}"><div class="{{color}} {{shape}} {{fill}}"></div></div>
+	<div class="card {{#if selected}} selected {{/if}}">
+    <div class="{{color}} {{shape}} {{fill}}"></div>
+  </div>
 </template>

@@ -63,10 +63,10 @@ if (Meteor.isClient) {
       var currentGame = Game.find({});
       var arrayOne = new Array();
       count = 0;
-      allPosiblePermutation([firstPick,firstPick,firstPick] );
-      // allPosibleCombinations(firstPick, 3);
+      // allPosiblePermutation([firstPick,firstPick,firstPick], console );
+      allPosibleCombinations([firstPick,secondPick ,thridPick], 3);
       currentGame.forEach(function (card){
-        console.log(card);
+        // console.log(card);
         // number = 0;
         // arrayOne[count] = (card.color === "orange" )? 3 : (card.color === "blue")?  6 : 9;
         // count++;
@@ -96,19 +96,25 @@ if (Meteor.isClient) {
     }
     return m;
   }
-  function allPosiblePermutation(choices, prefix) {
+  function allPosiblePermutation(choices, con, prefix) {
     numberOfCards++;
+
     // console.log(choices,choices.slice(1),(prefix || []).concat(choices[0][c]))
     if(!choices.length) {
       allPossibleCards[numberOfCards] = prefix;
-        return console.log(prefix); ;
+        return ;//console.log(prefix);
     }
-    for(var c = 0; c < choices[0].length; c++) {
+
+    for(var c = choices[0].length; c >= 0; c--) {
       // debugger;
       // console.log(choices,choices.slice(1),(prefix || []).concat(choices[0][c]))
       try {
+        // usedPositions = [];
+        // usedPositions.push(c+1)
+        // console.log('usedPositions',usedPositions);
+        allPosiblePermutation(choices.slice(1), con.log(choices[0]) , (prefix || []).concat(choices[0][c]) );
 
-        allPosiblePermutation(choices.slice(1), (prefix || []).concat(choices[0][c]));
+
       } catch (e) {
         // console.log("Error is here: ",e);
       } finally {
@@ -120,15 +126,33 @@ if (Meteor.isClient) {
   }
 
   function allPosibleCombinations(base, numberOfpicks){
-    var r = [];
-    for (var i = 0; i < base.length; i++) {
-      base.slice(2)
-      r.concat(base)
-      allPosibleCombinations();
-      console.log(r,base.length);
-    }
+    var r =[], b=[],t=[];
+    var one = base[0], two =base[1], three = base[2];
+    var counter= 0 ;
+    var c
+    var ddd;
+    // console.log(one,two,three);
+    // return;
+    for (var i = one.length; i > 0  ; i--) {
+      counter++
+      console.log('first level', one, two, r);
 
+      for (var p = two.length; p> 0; p--) {
+
+        console.log('seecond level',two ,three, r);
+        counter++
+
+        for (var o =  three.length; o > 0 ; o--) {
+          // (r[counter] || []).concat(o);
+            r[counter] = [i,p,o];
+            console.log('third level' ,r);
+            counter++
+        }
+      }
+    }
+    console.log("end",counter,r);
   }
+
   function cartesian() {
     var r = [],
         arg = arguments, max = arg.length-1;

@@ -134,23 +134,19 @@ if (Meteor.isClient) {
     // console.log(one,two,three);
     // return;
     for (var i = one.length; i > 0  ; i--) {
-      counter++
-      console.log('first level', one, two, r);
+      // counter++
+      console.log(">>",i, (two.length-i) - two.length);
+      for (var p = i-1 ; p> 0; p--) {
+        // counter++
 
-      for (var p = two.length; p> 0; p--) {
-
-        console.log('seecond level',two ,three, r);
-        counter++
-
-        for (var o =  three.length; o > 0 ; o--) {
-          // (r[counter] || []).concat(o);
-            r[counter] = [i,p,o];
-            console.log('third level' ,r);
+        for (var o =  p-1; o > 0 ; o--) {
             counter++
+            r[counter] = [i,p,o];
+            console.log(r[counter]);
         }
       }
     }
-    console.log("end",counter,r);
+    console.log("<<END>>\n",counter,r);
   }
 
   function cartesian() {

@@ -1,13 +1,9 @@
 #Ignore patterns
 
-local
+
 
 **/.DS_Store
 **/design_resources
 
-../.DS_Store
-../design_resources/
-
-*.DS_Store
 
 

@@ -30,6 +30,8 @@ if (Meteor.isClient) {
   numberOfCards = 0;
   cardsSelected = 0;
 
+  patternCandidate =[];
+
   body.helpers({
     numberOfSets: function(){
       return Session.get("numberOfSets");
@@ -91,6 +93,7 @@ if (Meteor.isClient) {
 
   card.events({
     'click .card': function(e){
+
       console.log("clicked>>>>>");
       if($(e.target).hasClass("selected")){
         Game.update(this._id, {$set: {
@@ -100,34 +103,32 @@ if (Meteor.isClient) {
         console.log("<<<<<hasClass selected");
       }
       else {
-        console.log(cardsSelected, "que pasa");
         if (cardsSelected < 3){
-        var thisCard = Template.instance();
-         Game.update(this._id, {$set: {
-          selected: true
-        }});
-        card[cardsSelected] = this._id;
-        console.log("clicked on the card: ", cardsSelected  );
-        // console.log(Game.find({}, {sort: {createdAt: -1}}).count());
-        if (cardsSelected === 2) checkForPatern(cardsSelected);
+          var thisCard = Template.instance();
+          Game.update(this._id, {$set: {
+            selected: true
+          }});
+        patternCandidate[cardsSelected] = this._id;
+        console.log("++cardsSelected", cardsSelected);
+        if (cardsSelected == 2) patternSearch(patternCandidate);
         cardsSelected++;
         }
       }
     }
   });
 
-  checkForPatern = function  (numberOfCards) {
+  checkForPatern = function  (cards) {
 
-    console.log("checking for patterns:", numberOfCards);
+    console.log("checking for patterns:", cards.length);
     var selection ={};
     var results = new Array(features.length);
 
     for (var i = features.length - 1; i >= 0; i--) {
       console.log("\tfeature", features[i]);
-      selection[i]= new Array(numberOfCards);
-      for (var c = numberOfCards ; c >= 0; c--) {
-        selection[i][c] =  Game.find(card[c]).fetch()[0][features[i]];
-        console.log("\t\tcard: " + c+ " id: ", card[c], "feature: ",features[i], "=", selection[i][c]);
+      selection[i]= new Array(cards.length);
+      for (var c = cards.length ; c >= 0; c--) {
+        selection[i][c] =  Game.find(cards[c]).fetch()[0][features[i]];
+        console.log("\t\tcard: " + c+ " id: ", cards[c], "feature: ",features[i], "=", selection[i][c]);
         if(selection[i][c+1] != undefined && c === 0){
           if( (selection[i][c] === selection[i][c+1] ) && (selection[i][c+1] === selection[i][c+2] ) ){
             console.log("\t\t\t Match in ", selection[i][c]);
@@ -160,7 +161,6 @@ if (Meteor.isClient) {
        for (var i = numberOfCards; i >= 0; i--) {
         Game.update(card[i], {$set: {
           selected: false
-
         }})
       };
       cardsSelected = -1;
@@ -169,6 +169,25 @@ if (Meteor.isClient) {
 
   }
 
+  function patternSearch(cardsID) {
+    candidate = new Array(cardsID.length);
+    for (var i = features.length - 1; i >= 0; i--){
+      for (var p = 0; p < cardsID.length; p++) {
+        candidate[p] = Game.find(cardsID[p]).fetch()[0][features[i]];
+        if(p == cardsID.length-1) {
+          if ( ( candidate[0] == candidate[1] && candidate[1] == candidate[2] ) || ( candidate[0] != candidate[1] && candidate[1] != candidate[2] && candidate[2] != candidate[0] ) ) {
+            if(i == 0 ) {
+              cardsSelected =-1;
+              return true;// console.log("SET CONFIRMED!");
+            }
+          }else {
+            cardsSelected =-1;
+            return false;
+          }
+        }
+      }
+    }
+  }
 
 
   card.onRendered(function(){
@@ -191,8 +210,6 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
-
-
 
 
 
@@ -222,15 +239,9 @@ if (Meteor.isServer) {
        // usedPositions.push(c+1)
        // console.log('usedPositions',usedPositions);
        allPosiblePermutation(choices.slice(1), con.log(choices[0]) , (prefix || []).concat(choices[0][c]) );
-
-
      } catch (e) {
-       // console.log("Error is here: ",e);
-     } finally {
 
      }
-
-     // console.log(choices,choices.slice(1),(prefix || []).concat(choices[0][c]))
    }
  }
 
@@ -242,12 +253,14 @@ if (Meteor.isServer) {
        for (var o =  p-1; o > 0 ; o--) {
            counter++
            r[counter] = [i,p,o];
-           checkForPatern([base[i], base[p], base[o]]);
-           // console.log(r[counter], base[i], base[p], base[o]);
+           try {
+             if(patternSearch([base[i], base[p], base[o]])) console.log(r[counter]);;
+           } catch (e) {
+           }
        }
      }
    }
-   console.log("<<END of COMBINATIONS>>\n",counter,r);
+  //  console.log("<<END of COMBINATIONS>>\n",counter,r);
  }
 
  function cartesian() {

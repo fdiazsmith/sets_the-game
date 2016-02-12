@@ -1,9 +1,198 @@
-#Ignore patterns
-
-
+########################
+#TITLE:       .gitignore
+#DESC:    Common Patters
+#UPDATED:     2016.02.10
+########################
 
 **/.DS_Store
 **/design_resources
 
 
+#########################
+# LOGS
+#########################
+**/*.log
 
+#########################
+# VIM 
+########################
+**/*.swp
+
+
+src/scripts/possible structure for app
+src/styles/_mixins.css
+
+
+
+########################
+# GRUNT DEVELOPMENT
+########################
+
+#ignore node_modules and instruct users to do npm install 
+#which fetches all required deps
+
+/node_modules
+/docs
+
+########################
+# COMPILED SOURCE
+########################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+########################
+# PACKAGES
+########################
+
+# it is better to unpack these files and commit raw source
+# git has its own built in compression methods
+
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+########################
+# LOGS & SQL #
+########################
+*.log
+*.sql
+*.sqlite
+
+########################
+# Cache and Temp #
+########################
+*~
+.sass-cache/
+dist/
+temp/
+*.scssc
+
+########################
+# OSX
+########################
+.DS_Store
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+########################
+# Sublime Text
+########################
+*.sublime-project
+*.sublime-workspace
+
+########################
+# Code Kit  #
+########################
+*.codekit
+
+########################
+# WORDPRESS
+########################
+wp-config.php
+
+########################
+# Vagrant
+########################
+# Because this really is a working directory, ignore vagrant's files
+/.vagrant
+
+# This is a file intended for hooking in a custom Vagrant configuration on up
+/Customfile
+
+# Allow for custom provisioning scripts that are not included with the repo
+/provision/flags/*
+!/provision/flags/readme.txt
+/provision/provision-custom.sh
+/provision/provision-pre.sh
+/provision/provision-post.sh
+
+# No need to share individual site configs with each other
+/config/nginx-config/sites/*.conf
+
+# No need to share our mysql data with each other
+/database/data/*
+
+# No need to share our individual sites with each other
+/www/*
+
+# And no need to share individual SQL files with each other
+
+*.sql
+*.sql.gz
+
+# BUT....
+
+# We do have some default nginx configs that should be included
+!/config/nginx-config/sites/default.conf
+
+# And we do have a default SQL file that should be included
+!/database/init.sql
+
+# And a few of our web directories are important to share.
+!/www/default/
+
+/www/default/database-admin
+/www/default/memcached-admin/Temp/.version
+/www/default/memcached-admin/Temp/latest
+/www/default/memcached-admin/Temp/live_stats.*
+
+#################
+## C++
+#################
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+# Executables
+*.exe
+*.out
+*.app
+
+#################
+## openFrameworks
+#################
+
+of/*
+!of/apps/
+
+[Bb]in/*
+![Bb]in/data/
+[Bb]uild/
+[Oo]bj/
+*.o
+[Dd]ebug*/
+[Rr]elease*/
+*.mode*
+*.app/
+*.pyc
+*.log
+ 
+
+**/node_modules/
+/bower_components/

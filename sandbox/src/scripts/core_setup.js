@@ -1,21 +1,21 @@
 /**
 	* Threejs.org
-	*	this sets up a convinient way to structure the proyect
+	* this file sets up convinient way to structure the project
 	*
+	* TODO:
+	* -[ ] check if device supports WebGL renderer.
 	*/
-
-
 
 /**
 	* GLOBAL VARIABLES
-
 	* - define global variables
 	*/
 
 var container
 	,	stats
 	;
-secondScene = false;
+
+
 var width
 	, height
 	, steps = 0
@@ -42,15 +42,6 @@ var camera, trackball, scene, renderer, scene_two;
 
 var cross;
 
-var transitionParams = {
-	"useTexture": false,
-	"transition": 0,
-	"transitionSpeed": 1.5,
-	"texture": 5,
-	"loopTexture": false,
-	"animateTransition": true,
-	"textureThreshold": 0.3
-};
 clock = new THREE.Clock();
 
 init();
@@ -73,45 +64,41 @@ animate();
 
 		// renderer
 		renderer = new THREE.WebGLRenderer( { antialias: false } );
-		renderer.setClearColor(0xaaaaaa ); //don't want it
+		renderer.setClearColor(0xDDDDDD ); //don't want it
 		renderer.setPixelRatio( window.devicePixelRatio );
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setSize( width, height);
 
 		// world - create a scene
 		scene = new THREE.Scene();
-		scene.fog = new THREE.FogExp2( 0xcccccc, 0.0025 );
+		// scene.fog = new THREE.FogExp2( 0xcccccc, 0.0025 );
 		scene.position.x = 0;
 		scene.position.y = 0;
 		scene.position.z = 0;
-		var worldAxes = new THREE.AxisHelper(10);
-		// scene.render = sceneRender.call(scene, clock.getDelta(), true);
+		var worldAxes = new THREE.AxisHelper(150);
+		
 		scene.add(worldAxes);
 
 
-		scene_two = new THREE.Scene();
-		scene_two.fog = new THREE.FogExp2( 0xa6cccc, 0.0025 );
-		scene_two.position.x = 0;
-		scene_two.position.y = 0;
-		scene_two.position.z = 0;
-		// scene_two.render = sceneRender.call(scene_two,  clock.getDelta(), true);
-		scene_two.add(worldAxes);
+
 		//camera
 		//CombinedCamera breaks the DOM Events :(
-		// camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 2000 );//
-		camera = new THREE.CombinedCamera( width/ 2, height/ 2, 70, 1, 1000, - 500, 1000 );
-		camera.position.x = 300;
-		camera.position.y = 0;
-		camera.position.z = 0;
+		camera =new THREE.OrthographicCamera( window.innerWidth / - 4, window.innerWidth / 4, window.innerHeight / 4, window.innerHeight / - 4, -500, 1000 );
+		// camera =new THREE.OrthographicCamera( 200, 200, 200, 200, -500, 100 );
+		// camera = new THREE.CombinedCamera( width/ 2, height/ 2, 70, 1, 1000, - 500, 1000 0		camera.position.x = 300;
+		camera.position.x = 45;//Math.PI/4;
+		camera.position.y = 0;//(2*Math.PI)/10.28;
+		camera.position.z = 0;//-(2*Math.PI)/12;
+		camera.zoom = 0;
 		camera.lookAt(scene.position);
 		var bgColor = new THREE.Color(LIGHT_GRAY);
 
-// 		// lights
+		// lights
 		var lighting    = new THREEx.ThreePointsLighting()
 		scene.add(lighting)
-		var light = new THREE.AmbientLight( 0x9d9d9d ); // soft white light
+		var light = new THREE.AmbientLight( 0xcccccc ); // soft white light
 		scene.add( light );
 
-console.log(scene.render);
+
 
 		container = document.getElementById( 'container' );
 		container.appendChild( renderer.domElement );
@@ -127,12 +114,12 @@ console.log(scene.render);
 		trackball.dynamicDampingFactor = 0.3;
 		trackball.keys = [ 65, 83, 68 ];
 		trackball.addEventListener( 'change', render );
-		//Orbit controls breaks: don't knwo why yet
-		// trackball = new THREE.OrbitControls( camera );
-		// trackball.damping = 0.2;
-		// trackball.addEventListener( 'change', render );
 
 
+		var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+		var material = new THREE.LineBasicMaterial();
+		var cube = new THREE.Mesh( geometry, material );
+		scene.add( cube );
 
 		keyboard = new THREEx.KeyboardState();
 
@@ -155,13 +142,6 @@ console.log(scene.render);
 	 	catch(e){
 	 		console.warn(e.message+" better check it out");
 	 	}
-		// sceneA = new Scene( "cube", 5000, 1200, 120, new THREE.Vector3(0,-0.4,0), 0xffffff );
-		// sceneB = new Scene( "sphere", 500, 2000, 50, new THREE.Vector3(0,0.2,0.1), 0x000000 );
-		sceneA = new Scene( scene, camera );
-		sceneB = new Scene( scene_two, camera);
-		transition = new Transition(sceneA,sceneB);
-		// transition = new	Transition(scene, scene_two);
-		// render();
 
 	}
 
@@ -174,12 +154,6 @@ function onWindowResize() {
 }
 
 function animate() {
-	// if(/Users/fdiazsmith/Documents/Tellart/sandbox/future_cone/src/scripts/main.js) console.log("just pressed KeyboardState");
-	// steps+= gui_input.bouncingSpeed;
-	// posibility_one.position.x = 20+( 10*(Math.cos(steps)));
-	// posibility_one.position.y = 2 +( 10*Math.abs(Math.sin(steps)));
-
-
 	TWEEN.update();
 	trackball.update();
 	render();
@@ -187,35 +161,12 @@ function animate() {
 }
 
 function render() {
-	// if(secondScene){
-	// 	renderer.render( scene_two, camera );
-	// }
-	// else{
-	// renderer.render( scene, camera );
-	// }
-	// console.log("dsas",scene);
-	transition.render(clock.getDelta())
-
+	renderer.render(scene, camera);
 	stats.update();
 	rendererStats.update(renderer);
 }
 
 
-
-function sceneRender( delta, rtt ) {
-	console.log(this);
-		// this.mesh.rotation.x += delta * this.rotationSpeed.x;
-		// this.mesh.rotation.y += delta * this.rotationSpeed.y;
-		// this.mesh.rotation.z += delta * this.rotationSpeed.z;
-
-		// renderer.setClearColor( this.clearColor );
-
-		if (rtt)
-			renderer.render( this, camera, this.fbo, true );
-		else
-			renderer.render( this, camera );
-
-	};
 
 /**
 	*________________________________________________________________________________
@@ -338,7 +289,7 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-makingStory = false;
+
 
 /**
 	* 	helper libs
@@ -388,60 +339,3 @@ function initRendererStats(){
 			bio_silicone.newStory(makingStory)
 		}
 	});
-
-
-
-
-
-
-	THREE.CombinedCamera.prototype.switchToOrtho = function () {
-		console.log("IT WORKS");
-		// Switches to the Orthographic camera estimating viewport from Perspective
-		//
-		// var fov = this.fov;
-		// var aspect = this.cameraP.aspect;
-		// var near = this.cameraP.near;
-		// var far = this.cameraP.far;
-		//
-		// // The size that we set is the mid plane of the viewing frustum
-		//
-		// var hyperfocus = ( near + far ) / 2;
-		//
-		// var halfHeight = Math.tan( fov * Math.PI / 180 / 2 ) * hyperfocus;
-		// var planeHeight = 2 * halfHeight;
-		// var planeWidth = planeHeight * aspect;
-		// var halfWidth = planeWidth / 2;
-		//
-		// halfHeight /= this.zoom;
-		// halfWidth /= this.zoom;
-		//
-		// this.cameraO.left = -halfWidth;
-		// this.cameraO.right = halfWidth;
-		// this.cameraO.top = halfHeight;
-		// this.cameraO.bottom = -halfHeight;
-
-
-
-
-
-//
-// 		// this.cameraO.left = -farHalfWidth;
-// 		// this.cameraO.right = farHalfWidth;
-// 		// this.cameraO.top = farHalfHeight;
-// 		// this.cameraO.bottom = -farHalfHeight;
-// 		//
-// 		// this.cameraO.left = this.left / this.zoom;
-// 		// this.cameraO.right = this.right / this.zoom;
-// 		// this.cameraO.top = this.top / this.zoom;
-// 		// this.cameraO.bottom = this.bottom / this.zoom;
-
-		this.cameraO.updateProjectionMatrix();
-
-		// this.near = this.cameraO.near;
-		// this.far = this.cameraO.far;
-		this.projectionMatrix = this.cameraO.projectionMatrix;
-
-		this.inPerspectiveMode = false;
-		this.inOrthographicMode = true;
-
-	};

@@ -1,0 +1,43 @@
+var ThemeObj = function(){
+	this.name ="fernando";
+	this.getName = function(){
+		console.log(this.name);
+		return this.name;
+	}
+}
+
+var StoryObject = function(name){
+	return Object.create(new ThemeObj,{
+		    doSomething: {
+	       value: function () {
+	         console.log("Doing something");
+	       },
+	    },
+	     foo: {
+	     	value: "Fsss"
+	    },
+	    name: {
+	     	value: name
+	    },
+	});	
+}
+
+StoryObject.prototype.getStory = function(){
+		console.log(this.story_name);
+		return this.story_name;
+}
+var PossibilityObject = Object.create(new ThemeObj,
+{
+	story_name : {
+	 value: function () {
+         console.log("Doing something");
+       },
+     },
+});	
+story_one = new StoryObject("fer")
+story_two = new StoryObject("red")
+
+console.dir(ThemeObj);
+console.dir(StoryObject);
+console.dir(story_one);
+console.dir(story_two);

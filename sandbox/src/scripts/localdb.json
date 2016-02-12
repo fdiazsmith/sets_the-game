@@ -1,0 +1,203 @@
+{
+	"Possibilities" : [
+		{
+		"name": "Implanted Chip",
+		"parent": "some theme",
+		"id": "123abc",
+		"year": "2055",
+		"description": "In the future we will have computer chips implanted into our brain. ",
+		"shape": "icosahadronGeometry",
+		"likes": "20",
+		"category": "culture",
+		"quadrant" : "3",
+		"cone_category": "probable",
+		"speed" : "2000",
+		"color" : "0xdeb226",
+		"size": "2"
+		},
+		{
+		"name": "CRISPR",
+		"parent": "some theme",
+		"id": "234hs8",
+		"year": "2061",
+		"description": "We can alter our DNA",
+		"shape": "octahedronGeometry",
+		"likes": "50",
+		"category": "nature",
+		"quadrant" : "2",
+		"cone_category": "possible",
+		"speed" : "15000",
+		"color" : "0x3b26de",
+		"size": "2"
+		},
+		{
+		"name": "Corwd source online goverment",
+		"parent": "some theme",
+		"id": "234jd8",
+		"year": "2049",
+		"description": "The Goverment institution will disapear and will only exist as an online thing. ",
+		"shape": "dodecahedronGeometry",
+		"likes": "20",
+		"category": "culture",
+		"quadrant" : "1",
+		"cone_category": "plausible",
+		"speed" : "5000",
+		"color" : "0xde3926",
+		"size": "2"
+		},
+		{
+		"name": "A world without Goverments",
+		"parent": "bio_silicone",
+		"id": "234dgjd8",
+		"year": "2032",
+		"description": "Goverments are useless.",
+		"shape": "sphereGeometry",
+		"likes": "25",
+		"category": "culture",
+		"quadrant" : "1",
+		"cone_category": "plausible",
+		"speed" : "8000",
+		"color" : "0xff0077",
+		"size": "2"
+		},
+		{
+		"name": "Global system of Self Regulation",
+		"parent": "bio_silicone",
+		"id": "3d9jddfa8",
+		"year": "2065",
+		"description": "We will get to a point where everything we do regulated by a corporation",
+		"shape": "dodecahedronGeometry",
+		"likes": "25",
+		"category": "biological",
+		"quadrant" : "3",
+		"cone_category": "possible",
+		"speed" : "8000",
+		"color" : "0xff00af",
+		"size": "2"
+		},
+		{
+		"name": "Bio Protests",
+		"parent": "bio_silicone",
+		"id": "13dgjd8",
+		"year": "2030",
+		"description": "The world will protest against biological control.",
+		"shape": "dodecahedronGeometry",
+		"likes": "25",
+		"category": "culture",
+		"quadrant" : "3",
+		"cone_category": "plausible",
+		"speed" : "8000",
+		"color" : "0xff00af",
+		"size": "2"
+		},
+		{
+		"name": "Golden Age of Big data",
+		"parent": "bio_silicone",
+		"id": "39013h",
+		"year": "2020",
+		"description": "Every thing is part of something bigger and it is understood",
+		"shape": "sphereGeometry",
+		"likes": "12",
+		"category": "Tech",
+		"quadrant" : "1",
+		"cone_category": "probable",
+		"speed" : "10000",
+		"color" : "0xff3aaf",
+		"size": "2"
+		},
+		{
+		"name": "Internet of Things",
+		"parent": "bio_silicone",
+		"id": "5441c",
+		"year": "2018",
+		"description": "All of our object will become increasingly conected.",
+		"shape": "sphereGeometry",
+		"likes": "12",
+		"category": "Tech",
+		"quadrant" : "1",
+		"cone_category": "probable",
+		"speed" : "10000",
+		"color" : "0xff3aaf",
+		"size": "2"
+		},
+		{
+		"name": "Quantum Computing",
+		"parent": "bio_silicone",
+		"id": "435k8893j",
+		"year": "2025",
+		"description": "Quantum Computing will give us better control of our surroundings.",
+		"shape": "sphereGeometry",
+		"likes": "12",
+		"category": "Tech",
+		"quadrant" : "1",
+		"cone_category": "probable",
+		"speed" : "10000",
+		"color" : "0x2f3ade",
+		"size": "2"
+		},
+		{
+		"name": "DNA as historical qrchive",
+		"parent": "bio_silicone",
+		"id": "55d23fh9",
+		"year": "2045",
+		"description": "Super Intelligent AI's will preserve our DNA as it is for pure archival reasons.",
+		"shape": "sphereGeometry",
+		"likes": "10",
+		"category": "Tech Bio",
+		"quadrant" : "2",
+		"cone_category": "plausible",
+		"speed" : "10000",
+		"color" : "0x263bde",
+		"size": "2"
+		},
+		{
+		"name": "DNA as historical qrchive",
+		"parent": "bio_silicone",
+		"id": "doiqwue1992",
+		"year": "2045",
+		"description": "Super Intelligent AI's will preserve our DNA as it is for pure archival reasons.",
+		"shape": "sphereGeometry",
+		"likes": "10",
+		"category": "Tech Bio",
+		"quadrant" : "1",
+		"cone_category": "plausible",
+		"speed" : "10000",
+		"color" : "0xa70077",
+		"size": "2"
+		},
+		{
+		"name": "AI's make the decisions",
+		"parent": "bio_silicone",
+		"id": "0987hhs",
+		"year": "2040",
+		"description": "We will hand the desicion making power to super inteligent computers, because they are better than us.",
+		"shape": "octahedronGeometry",
+		"likes": "21",
+		"category": "Tech",
+		"quadrant" : "1",
+		"cone_category": "plausible",
+		"speed" : "10000",
+		"color" : "0xff0077",
+		"size": "2"
+		}
+	],
+	"Stories": [
+		{
+		"name": "Test story",
+		"possibilities": [
+				{"id": "234hs8"},
+				{"id": "123abc"},
+				{"id": "234jd8"}
+			]
+		},
+		{
+		"name": "Bio Bad",
+		"possibilities": [
+				{"id": "3d9jddfa8"},
+				{"id": "55d23fh9"},
+				{"id": "13dgjd8"},
+				{"id": "39013h"}
+			]
+		}
+	]
+}

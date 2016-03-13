@@ -1,2 +1,2 @@
-export PORT=3000
+export PORT=3001
 export CUSTOM_VAR="some value"

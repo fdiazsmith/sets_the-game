@@ -12,31 +12,28 @@
 	*/
 
 
-			var container, stats;
-			var camera, scene, raycaster, renderer;
+var container, stats;
+var camera, scene, raycaster, renderer;
 
-			var mouse = new THREE.Vector2(), INTERSECTED;
-			var radius = 500, theta = 0;
-			var frustumSize = 1000;
+var mouse = new THREE.Vector2(), INTERSECTED;
+var radius = 500, theta = 0;
+var frustumSize = 1000;
 
-			init();
-			animate();
+init();
+animate();
 
 			function init() {
 
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				var info = document.createElement( 'div' );
-				info.style.position = 'absolute';
-				info.style.top = '10px';
-				info.style.width = '100%';
-				info.style.textAlign = 'center';
-				info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> webgl - interactive cubes';
-				container.appendChild( info );
+				
 
 				var aspect = window.innerWidth / window.innerHeight;
 				camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
+				camera.position.x = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
+				camera.position.y = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
+				camera.position.z = 50;//radius * Math.cos( THREE.Math.degToRad( theta ) );
 
 				scene = new THREE.Scene();
 
@@ -44,27 +41,38 @@
 				light.position.set( 1, 1, 1 ).normalize();
 				scene.add( light );
 
-				var geometry = new THREE.BoxGeometry( 20, 20, 20 );
+				// var cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
+				var cubeGeometry = cube( 50 ); //it has to use this function because otherwise it does not display all edges.
 
-				for ( var i = 0; i < 2000; i ++ ) {
+				cubeGeometry.computeLineDistances();
+				// geometrySpline.computeLineDistances();
 
-					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+				// var object = new THREE.Line( geometrySpline, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 1, gapSize: 0.5 } ) );
 
-					object.position.x = Math.random() * 800 - 400;
-					object.position.y = Math.random() * 800 - 400;
-					object.position.z = Math.random() * 800 - 400;
+				// objects.push( object );
+				// scene.add( object );
 
-					object.rotation.x = Math.random() * 2 * Math.PI;
-					object.rotation.y = Math.random() * 2 * Math.PI;
-					object.rotation.z = Math.random() * 2 * Math.PI;
+				var object = new THREE.LineSegments( cubeGeometry, new THREE.LineDashedMaterial( { color: 0xAAAAAA, dashSize: 3, gapSize: 3, linewidth: 1 } ) );
 
-					object.scale.x = Math.random() + 0.5;
-					object.scale.y = Math.random() + 0.5;
-					object.scale.z = Math.random() + 0.5;
+				// objects.push( object );
+				scene.add( object );
+				// var cubeObject = new THREE.Mesh(cubeGeometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+				// cubeObject.position.x = 0;//Math.random() * 800 - 400;
+				// cubeObject.position.y = 0;//Math.random() * 800 - 400;
+				// cubeObject.position.z = 0;//Math.random() * 800 - 400;
 
-					scene.add( object );
+				// cubeObject.rotation.x = 0;//Math.random() * 2 * Math.PI;
+				// cubeObject.rotation.y = 0;//Math.random() * 2 * Math.PI;
+				// cubeObject.rotation.z = 0;//Math.random() * 2 * Math.PI;
 
-				}
+				// cubeObject.scale.x = 1;//Math.random() + 0.5;
+				// cubeObject.scale.y = 1;//Math.random() + 0.5;
+				// cubeObject.scale.z = 1;//Math.random() + 0.5;
+
+					// scene.add( cubeObject );
+
+				
+				
 
 				raycaster = new THREE.Raycaster();
 
@@ -85,6 +93,54 @@
 				//
 
 				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+			function cube( size ) {
+
+				var h = size * 0.5;
+
+				var geometry = new THREE.Geometry();
+
+				geometry.vertices.push(
+					new THREE.Vector3( -h, -h, -h ),
+					new THREE.Vector3( -h, h, -h ),
+
+					new THREE.Vector3( -h, h, -h ),
+					new THREE.Vector3( h, h, -h ),
+
+					new THREE.Vector3( h, h, -h ),
+					new THREE.Vector3( h, -h, -h ),
+
+					new THREE.Vector3( h, -h, -h ),
+					new THREE.Vector3( -h, -h, -h ),
+
+
+					new THREE.Vector3( -h, -h, h ),
+					new THREE.Vector3( -h, h, h ),
+
+					new THREE.Vector3( -h, h, h ),
+					new THREE.Vector3( h, h, h ),
+
+					new THREE.Vector3( h, h, h ),
+					new THREE.Vector3( h, -h, h ),
+
+					new THREE.Vector3( h, -h, h ),
+					new THREE.Vector3( -h, -h, h ),
+
+					new THREE.Vector3( -h, -h, -h ),
+					new THREE.Vector3( -h, -h, h ),
+
+					new THREE.Vector3( -h, h, -h ),
+					new THREE.Vector3( -h, h, h ),
+
+					new THREE.Vector3( h, h, -h ),
+					new THREE.Vector3( h, h, h ),
+
+					new THREE.Vector3( h, -h, -h ),
+					new THREE.Vector3( h, -h, h )
+				 );
+
+				return geometry;
 
 			}
 
@@ -111,7 +167,6 @@
 				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 			}
-
 			//
 
 			function animate() {
@@ -124,12 +179,11 @@
 			}
 
 			function render() {
+// theta = 0.2;
+			// camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
+			// 	camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
+			// 	camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
 
-				theta += 0.1;
-
-				camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
-				camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
-				camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
 				camera.lookAt( scene.position );
 
 				camera.updateMatrixWorld();
@@ -154,7 +208,7 @@
 
 				} else {
 
-					if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+					// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
 
 					INTERSECTED = null;
 
@@ -166,9 +220,6 @@
 /**
 	*________________________________________________________________________________
 	*/
-
-
-
 
 // source : http://stackoverflow.com/questions/23514274/three-js-2d-text-sprite-labels
 function TextSprite( message, parameters ) {
@@ -310,27 +361,27 @@ function initRendererStats(){
 
 
 	// handle keydown, return early if event is an autorepeat
-	keyboard.domElement.addEventListener('keydown', function(event){
-		if ( keyboard.eventMatches(event, 'left') ){
-			// if (event.repeat) {
-			// 	return;
-			// }
-			console.log("left", event)
-		}
-		if ( keyboard.eventMatches(event, 'right') ){
-			console.log("right")
-		}
-		if ( keyboard.eventMatches(event, 'up') ){
-			console.log("up")
-		}
-		if ( keyboard.eventMatches(event, 'down') ){
-			console.log("down")
-		}
-		if ( keyboard.eventMatches(event, 'shift+a') ){
-			if (event.repeat) {
-				return;
-			}
-			makingStory = !makingStory;
-			bio_silicone.newStory(makingStory)
-		}
-	});
+	// keyboard.domElement.addEventListener('keydown', function(event){
+	// 	if ( keyboard.eventMatches(event, 'left') ){
+	// 		// if (event.repeat) {
+	// 		// 	return;
+	// 		// }
+	// 		console.log("left", event)
+	// 	}
+	// 	if ( keyboard.eventMatches(event, 'right') ){
+	// 		console.log("right")
+	// 	}
+	// 	if ( keyboard.eventMatches(event, 'up') ){
+	// 		console.log("up")
+	// 	}
+	// 	if ( keyboard.eventMatches(event, 'down') ){
+	// 		console.log("down")
+	// 	}
+	// 	if ( keyboard.eventMatches(event, 'shift+a') ){
+	// 		if (event.repeat) {
+	// 			return;
+	// 		}
+	// 		makingStory = !makingStory;
+	// 		bio_silicone.newStory(makingStory)
+	// 	}
+	// });

@@ -33,7 +33,6 @@ function init_app (argument) {
 
 function registerEventListeners(){
 	$(window).keydown( function(e){
-		// console.log("MAIN ","just pressed a key on the window", e);
 		switch(e.which){
 			case 38:
 				// console.log("MAIN ",'UP');
@@ -42,6 +41,5 @@ function registerEventListeners(){
 			default:
 			break;
 		}
-			camera.lookAt(scene.position);
 	});
 }

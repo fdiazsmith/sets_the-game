@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Future Cone</title>
+
+  <link rel="shortcut icon" href="favicon.ico?v=2" />
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <script type="text/javascript" src="../bower_components/stats.js/build/stats.min.js"></script>
+  <script type="text/javascript" src="../bower_components/dat-gui/build/dat.gui.min.js"></script>
+
+</head>
+
+  <body>
+  <header class="nav"  role="navigation">
+    <div id="Stats-output"></div>
+  </header>
+  <div id="container"></div>
+  <footer>
+
+  </footer>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../bower_components/threejs/build/three.js"></script>
+  <script src="../bower_components/tweenjs/build/tween.min.js"></script>
+
+
+  <script src='../bower_components/threejs/examples/js/controls/TrackballControls.js'></script>
+  <script src='../bower_components/threejs/examples/js/cameras/CombinedCamera.js'></script>
+  <script src='../bower_components/threejs/examples/js/renderers/Projector.js'></script>
+  <script src='../bower_components/threejs/examples/js/controls/OrbitControls.js'></script>
+
+  <!-- // <script src='../bower_components/threejs/examples/js/crossfade/gui.js'></script> -->
+  <script src='../bower_components/threejs/examples/js/crossfade/scenes.js'></script>
+  <!-- <script src='scripts/crossfade.js'></script> -->
+
+
+  <!-- // <script src='../bower_components/eventdispatcher.js/src/EventDispatcher.js'></script> -->
+
+
+  <script src='../bower_components/threex.domevents/threex.domevents.js'></script>
+  <script src='../bower_components/threex.objcoord/threex.objcoord.js'></script>
+  <script src='../bower_components/threex.rendererstats/threex.rendererstats.js'></script>
+  <script src="../bower_components/threex.basiclighting/threex.basiclighting.js"></script>
+  <script src="../bower_components/threex.solidwireframe/threex.solidwireframe.js"></script>
+  <script src="../bower_components/threex.keyboardstate/threex.keyboardstate.js"></script>
+  <script src="../bower_components/threejs/examples/js/renderers/CSS3DRenderer.js"></script>
+
+
+
+  <script src="fonts/gentilis_bold.typeface.js"></script>
+  <script src="fonts/gentilis_regular.typeface.js"></script>
+  <script src="fonts/optimer_bold.typeface.js"></script>
+  <script src="fonts/optimer_regular.typeface.js"></script>
+  <script src="fonts/helvetiker_bold.typeface.js"></script>
+  <script src="fonts/helvetiker_regular.typeface.js"></script>
+  <script src="fonts/droid_sans_regular.typeface.js"></script>
+  <script src="fonts/droid_sans_bold.typeface.js"></script>
+  <script src="fonts/droid_serif_regular.typeface.js"></script>
+  <script src="fonts/droid_serif_bold.typeface.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <!--    <script type="text/javascript" src="scripts/Possibility.js"></script>
+    <script type="text/javascript" src="scripts/Story.js"></script>
+    <script type="text/javascript" src="scripts/Theme.js"></script>
+    <script type="text/javascript" src="scripts/ThreeHorizons.js"></script> -->
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/core_setup.js"></script>
+
+<!-- <div id="making-story" style="display: block">
+  <h1>New story</h1>
+  <p>Click on the future possibilities to add them to this Story Line.</p>
+  <h6>click <i>Shift+A</i> or <i>start_end_story</i> to finish</h6></div> -->
+
+  <!-- <div id="create-possibility">
+    <section>
+      <div class="close"></div>
+      <h1>Create new Possibility</h1>
+      <form>
+        <label for="name">Name</label>
+        <input name="name" id="pos-name"type="text" placeholder="Name your future">
+      </form>
+      <form>
+        <label for="description">Description</label>
+        <input name="description" type="text" placeholder="describe a bit more">
+      </form>
+      <form>
+        <label name="year" for="position" > Year </label>
+        <input name="position" type="number" placeholder="A year after 2015" >
+      </form>
+      <form class="list" >
+        <label for="quadrant">Select Quadrant</label>
+        <select name="quadrant"  >
+          <option value = "1">Silicone Growth </option>
+          <option value = "2">Biological Growth </option>
+          <option value = "3">Silicone Recession </option>
+          <option value = "4">Biological Recession</option>
+        </select>
+      </form>
+      <form class="list" >
+        <label for="cone_category">Likelyhood</label>
+        <select name="cone_category"  >
+          <option value = "probable">Probable</option>
+          <option value = "plausible">Plausible</option>
+          <option value = "possible">Possible </option>
+        </select>
+      </form>
+      <form class="list" >
+        <label for="shape" >Select shape</label>
+        <select name="shape"  >
+          <option value = "sphereGeometry">Sphere</option>
+          <option value = "tetrahedronGeometry">Tetrahedron</option>
+          <option value = "octahedronGeometry">Octahedron</option>
+          <option value = "icosahadronGeometry">Icosahedron</option>
+        </select>
+      </form>
+      <button name="submit" type="submit" >Add future possibility </button>
+    </section >
+  </div> -->
+
+<!-- <div class="editing" id="info-card">
+<div class="close"></div>
+<h1>"+this.name+"</h1>
+<p> year "+this.year+"</p>
+<p>"+this.description+"</p>
+<p class="position">
+  <b></b>
+  <span class="probable"></span>
+  <span class="plausible"></span>
+  <span class="possible"></span>
+</p>
+<button class="edit">Edit</button>
+</div> -->
+
+
+  </body>
+</html>

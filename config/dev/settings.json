@@ -1,0 +1,6 @@
+{
+	"public" :{
+		"someKey" : "HI"
+	},
+	"privateKey" : "dfsa"
+}

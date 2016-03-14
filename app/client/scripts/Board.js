@@ -1,27 +1,34 @@
 
 /**
 	* Board is esentially the enviroment. Created with THREE.js
-	* It creates and controls the scenes
+	* It creates and controls the self.scenes
 	* TODO:
 	* - [ ] Consider passing paremeters to the board
 	*
+  * NOTE: Classes need to be declared as global for them to be "viewed" by other files.
 	* @class Board
 	* @constructor
 	*/
 
-var Board = function(){
+
+
+Board = function(){
 	//Public
 	self = this;
-
+  self.camera;
+  self.scene;
   //Private
   var container, stats;
-  var camera, scene, raycaster, renderer;
+  var raycaster, renderer;
 
-  var mouse = new THREE.Vector2(), INTERSECTED;
+  mouse = new THREE.Vector2();
+  INTERSECTED = false;
+
   var radius = 500, theta = 0;
-  var frustumSize = 1000;
+  frustumSize = 1000;
 
   self.init();
+  self.animate();
   console.log("Board initialized");
 };
 
@@ -32,23 +39,24 @@ var Board = function(){
   * @param {String} - first_argument. sorting algorithm to choose from
   */
 Board.prototype.init = function(first_argument) {
+
   container = document.createElement( 'div' );
   document.body.appendChild( container );
 
   var aspect = window.innerWidth / window.innerHeight;
-  camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
-  camera.position.x = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
-  camera.position.y = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
-  camera.position.z = 50;//radius * Math.cos( THREE.Math.degToRad( theta ) );
+  self.camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
+  self.camera.position.x = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
+  self.camera.position.y = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
+  self.camera.position.z = 50;//radius * Math.cos( THREE.Math.degToRad( theta ) );
 
-  scene = new THREE.Scene();
+  self.scene = new THREE.Scene();
 
   var light = new THREE.DirectionalLight( 0xffffff, 1 );
   light.position.set( 1, 1, 1 ).normalize();
-  scene.add( light );
+  self.scene.add( light );
 
   // var cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
-  var cubeGeometry = cube( 50 ); //it has to use this function because otherwise it does not display all edges.
+  var cubeGeometry = self.cube( 50 ); //it has to use this function because otherwise it does not display all edges.
 
   cubeGeometry.computeLineDistances();
   // geometrySpline.computeLineDistances();
@@ -56,12 +64,12 @@ Board.prototype.init = function(first_argument) {
   // var object = new THREE.Line( geometrySpline, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 1, gapSize: 0.5 } ) );
 
   // objects.push( object );
-  // scene.add( object );
+  // self.scene.add( object );
 
   var object = new THREE.LineSegments( cubeGeometry, new THREE.LineDashedMaterial( { color: 0xAAAAAA, dashSize: 3, gapSize: 3, linewidth: 1 } ) );
 
   // objects.push( object );
-  scene.add( object );
+  self.scene.add( object );
   // var cubeObject = new THREE.Mesh(cubeGeometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
   // cubeObject.position.x = 0;//Math.random() * 800 - 400;
   // cubeObject.position.y = 0;//Math.random() * 800 - 400;
@@ -75,7 +83,7 @@ Board.prototype.init = function(first_argument) {
   // cubeObject.scale.y = 1;//Math.random() + 0.5;
   // cubeObject.scale.z = 1;//Math.random() + 0.5;
 
-    // scene.add( cubeObject );
+    // self.scene.add( cubeObject );
 
 
 
@@ -93,12 +101,9 @@ Board.prototype.init = function(first_argument) {
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.top = '0px';
   container.appendChild( stats.domElement );
-
-  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
-  //
-
-  window.addEventListener( 'resize', onWindowResize, false );
+  //TODO: fix these reference error
+  // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  // window.addEventListener( 'resize', onWindowResize, false );
 };
 
 
@@ -113,7 +118,7 @@ Board.prototype.cube = function ( size ) {
 	var h = size * 0.5;
 
 	var geometry = new THREE.Geometry();
-
+  //comment out the vertices necessary to only show three faces
 	geometry.vertices.push(
 		new THREE.Vector3( -h, -h, -h ),
 		new THREE.Vector3( -h, h, -h ),
@@ -131,11 +136,11 @@ Board.prototype.cube = function ( size ) {
 		new THREE.Vector3( -h, -h, h ),
 		new THREE.Vector3( -h, h, h ),
 
-		new THREE.Vector3( -h, h, h ),
-		new THREE.Vector3( h, h, h ),
+		// new THREE.Vector3( -h, h, h ),
+		// new THREE.Vector3( h, h, h ),
 
-		new THREE.Vector3( h, h, h ),
-		new THREE.Vector3( h, -h, h ),
+		// new THREE.Vector3( h, h, h ),
+		// new THREE.Vector3( h, -h, h ),
 
 		new THREE.Vector3( h, -h, h ),
 		new THREE.Vector3( -h, -h, h ),
@@ -146,8 +151,8 @@ Board.prototype.cube = function ( size ) {
 		new THREE.Vector3( -h, h, -h ),
 		new THREE.Vector3( -h, h, h ),
 
-		new THREE.Vector3( h, h, -h ),
-		new THREE.Vector3( h, h, h ),
+		// new THREE.Vector3( h, h, -h ),
+		// new THREE.Vector3( h, h, h ),
 
 		new THREE.Vector3( h, -h, -h ),
 		new THREE.Vector3( h, -h, h )
@@ -164,12 +169,12 @@ Board.prototype.onWindowResize = function onWindowResize() {
 
 	var aspect = window.innerWidth / window.innerHeight;
 
-	camera.left   = - frustumSize * aspect / 2;
-	camera.right  =   frustumSize * aspect / 2;
-	camera.top    =   frustumSize / 2;
-	camera.bottom = - frustumSize / 2;
+	self.camera.left   = - frustumSize * aspect / 2;
+	self.camera.right  =   frustumSize * aspect / 2;
+	self.camera.top    =   frustumSize / 2;
+	self.camera.bottom = - frustumSize / 2;
 
-	camera.updateProjectionMatrix();
+	self.camera.updateProjectionMatrix();
 
 	renderer.setSize( window.innerWidth, window.innerHeight );
 };
@@ -188,57 +193,57 @@ Board.prototype.onDocumentMouseMove = function ( event ) {
 			
 
 /**
-  * Animate THREE js scene
+  * Animate THREE js self.scene
   * @method animate
   */
 Board.prototype.animate = function () {
-	requestAnimationFrame( animate );
+	requestAnimationFrame( self.animate );
 
-	render();
+	self.render();
 	stats.update();
 };
 
 /**
-  * Render THREE js scene
+  * Render THREE js self.scene
   * @method render
   */
 Board.prototype.render = function () {		
 	// theta = 0.2;
-	// camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
-	// 	camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
-	// 	camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
+	// self.camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
+	// 	self.camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
+	// 	self.camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
 
-	camera.lookAt( scene.position );
+	self.camera.lookAt( self.scene.position );
 
-	camera.updateMatrixWorld();
+	self.camera.updateMatrixWorld();
 
 	// find intersections
 
-	raycaster.setFromCamera( mouse, camera );
+	raycaster.setFromCamera( mouse, self.camera );
 
-	var intersects = raycaster.intersectObjects( scene.children );
+	var intersects = raycaster.intersectObjects( self.scene.children );
 
-	if ( intersects.length > 0 ) {
+	// if ( intersects.length > 0 ) {
 
-		if ( INTERSECTED != intersects[ 0 ].object ) {
+	// 	if ( INTERSECTED != intersects[ 0 ].object ) {
 
-			if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+	// 		if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
 
-			INTERSECTED = intersects[ 0 ].object;
-			INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-			INTERSECTED.material.emissive.setHex( 0xff0000 );
+	// 		INTERSECTED = intersects[ 0 ].object;
+	// 		INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+	// 		INTERSECTED.material.emissive.setHex( 0xff0000 );
 
-		}
+	// 	}
 
-	} else {
+	// } else {
 
-		// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+	// 	// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
 
-		INTERSECTED = null;
+	// 	INTERSECTED = null;
 
-	}
+	// }
 
-	renderer.render( scene, camera );
+	renderer.render( self.scene, self.camera );
 
 };
 
@@ -285,7 +290,7 @@ function TextSprite( message, parameters ) {
     this.sprite.scale.set(0.5 * fontsize, 0.25 * fontsize, 0.75 * fontsize);
 
     this.sprite.position.set( position[0],position[1],position[2] );
-    // scene.add(this.sprite);
+    // self.scene.add(this.sprite);
     // console.log(this.sprite);
     // return sprite;
 }
@@ -315,10 +320,10 @@ var clickToWorldCoord = function(event){
 	    - ( event.clientY / window.innerHeight ) * 2 + 1,
 	    0.5 );
 		console.log(vector);
-	vector.unproject( camera );
-	var dir = vector.sub( camera.position ).normalize();
-	var distance = - camera.position.z / dir.z;
-	return camera.position.clone().add( dir.multiplyScalar( distance ) );
+	vector.unproject( self.camera );
+	var dir = vector.sub( self.camera.position ).normalize();
+	var distance = - self.camera.position.z / dir.z;
+	return self.camera.position.clone().add( dir.multiplyScalar( distance ) );
 }
 // Rotate an object around an arbitrary axis in object space
 var rotObjectMatrix;

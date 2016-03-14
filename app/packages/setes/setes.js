@@ -1,5 +1,5 @@
 // Write your package code here!
 
-var Setes = function(){
+SetesV = function(){
 	console.log("got some setes");
 }

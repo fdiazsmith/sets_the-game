@@ -8,9 +8,13 @@
 // import "./Setes.js";
 //this if statement might be superflous
 if (Meteor.isClient) {
-  console.log("Client is loaded");
-  // Tinytest.add(true);
-  // var setes = new Setes();
+	$(document).ready(function (argument) {
+	  console.log("Client is loaded");
+	  // Tinytest.add(true);
+	  var setes = new Setes();
+	  // var sdfs = new SetesV();
+	});
+
   //Example of how to access the meteor settings
 	console.log(Meteor.settings);
 };

@@ -3,12 +3,12 @@
 	* Setes will contain everything about the game.
 	* TODO:
 	* - [ ] Story initializes the three js environment.
-	*
+	* NOTE: Classes need to be declared as global for them to be "viewed" by other files.
 	* @class Setes
 	* @constructor
 	*/
 
-var Setes = function(){
+Setes = function(){
   //Public
 	self = this;
   self.board = new Board();
@@ -332,3 +332,4 @@ Setes.prototype.allPosibleCombinations =  function (base, numberOfpicks){
    }
    return m;
  }
+

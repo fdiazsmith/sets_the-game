@@ -10,8 +10,6 @@
 	* @constructor
 	*/
 
-
-
 Board = function(){
 	//Public
 	self = this;
@@ -34,7 +32,7 @@ Board = function(){
 
 
 /**
-  * Initializes THREE.js environment 
+  * Initializes THREE.js environment
   * @method init
   * @param {String} - first_argument. sorting algorithm to choose from
   */
@@ -50,41 +48,6 @@ Board.prototype.init = function(first_argument) {
   self.camera.position.z = 50;//radius * Math.cos( THREE.Math.degToRad( theta ) );
 
   self.scene = new THREE.Scene();
-
-  var light = new THREE.DirectionalLight( 0xffffff, 1 );
-  light.position.set( 1, 1, 1 ).normalize();
-  self.scene.add( light );
-
-  // var cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
-  var cubeGeometry = self.cube( 50 ); //it has to use this function because otherwise it does not display all edges.
-
-  cubeGeometry.computeLineDistances();
-  // geometrySpline.computeLineDistances();
-
-  // var object = new THREE.Line( geometrySpline, new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 1, gapSize: 0.5 } ) );
-
-  // objects.push( object );
-  // self.scene.add( object );
-
-  var object = new THREE.LineSegments( cubeGeometry, new THREE.LineDashedMaterial( { color: 0xAAAAAA, dashSize: 3, gapSize: 3, linewidth: 1 } ) );
-
-  // objects.push( object );
-  self.scene.add( object );
-  // var cubeObject = new THREE.Mesh(cubeGeometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
-  // cubeObject.position.x = 0;//Math.random() * 800 - 400;
-  // cubeObject.position.y = 0;//Math.random() * 800 - 400;
-  // cubeObject.position.z = 0;//Math.random() * 800 - 400;
-
-  // cubeObject.rotation.x = 0;//Math.random() * 2 * Math.PI;
-  // cubeObject.rotation.y = 0;//Math.random() * 2 * Math.PI;
-  // cubeObject.rotation.z = 0;//Math.random() * 2 * Math.PI;
-
-  // cubeObject.scale.x = 1;//Math.random() + 0.5;
-  // cubeObject.scale.y = 1;//Math.random() + 0.5;
-  // cubeObject.scale.z = 1;//Math.random() + 0.5;
-
-    // self.scene.add( cubeObject );
-
 
 
 
@@ -107,59 +70,6 @@ Board.prototype.init = function(first_argument) {
 };
 
 
-/**
-  * Create all the verizes necessary for a wireframe cube to display correctly.
-  * @method cube
-  * @param {INT} - size. size of the cube to make
-  * @return {THREE.Geometry}
-  */
-Board.prototype.cube = function ( size ) {
-
-	var h = size * 0.5;
-
-	var geometry = new THREE.Geometry();
-  //comment out the vertices necessary to only show three faces
-	geometry.vertices.push(
-		new THREE.Vector3( -h, -h, -h ),
-		new THREE.Vector3( -h, h, -h ),
-
-		new THREE.Vector3( -h, h, -h ),
-		new THREE.Vector3( h, h, -h ),
-
-		new THREE.Vector3( h, h, -h ),
-		new THREE.Vector3( h, -h, -h ),
-
-		new THREE.Vector3( h, -h, -h ),
-		new THREE.Vector3( -h, -h, -h ),
-
-
-		new THREE.Vector3( -h, -h, h ),
-		new THREE.Vector3( -h, h, h ),
-
-		// new THREE.Vector3( -h, h, h ),
-		// new THREE.Vector3( h, h, h ),
-
-		// new THREE.Vector3( h, h, h ),
-		// new THREE.Vector3( h, -h, h ),
-
-		new THREE.Vector3( h, -h, h ),
-		new THREE.Vector3( -h, -h, h ),
-
-		new THREE.Vector3( -h, -h, -h ),
-		new THREE.Vector3( -h, -h, h ),
-
-		new THREE.Vector3( -h, h, -h ),
-		new THREE.Vector3( -h, h, h ),
-
-		// new THREE.Vector3( h, h, -h ),
-		// new THREE.Vector3( h, h, h ),
-
-		new THREE.Vector3( h, -h, -h ),
-		new THREE.Vector3( h, -h, h )
-	);
-
-	return geometry;
-};
 
 /**
   * On window resize. take appropriate action.
@@ -182,7 +92,7 @@ Board.prototype.onWindowResize = function onWindowResize() {
 /**
   * Handle mouse event
   * @method onDocumentMouseMove
-  * @param {Bool} - event. 
+  * @param {Bool} - event.
   */
 Board.prototype.onDocumentMouseMove = function ( event ) {
 	event.preventDefault();
@@ -190,7 +100,7 @@ Board.prototype.onDocumentMouseMove = function ( event ) {
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 };
-			
+
 
 /**
   * Animate THREE js self.scene
@@ -207,7 +117,7 @@ Board.prototype.animate = function () {
   * Render THREE js self.scene
   * @method render
   */
-Board.prototype.render = function () {		
+Board.prototype.render = function () {
 	// theta = 0.2;
 	// self.camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	// 	self.camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
@@ -414,4 +324,3 @@ function initRendererStats(){
 	// 		bio_silicone.newStory(makingStory)
 	// 	}
 	// });
-

@@ -1,7 +1,7 @@
 /**
   *
   * C L I E N T
-  * 
+  *
   *
   */
 
@@ -9,12 +9,12 @@
 //this if statement might be superflous
 if (Meteor.isClient) {
 	$(document).ready(function (argument) {
-	  console.log("Client is loaded");
+	  console.log("setes: Client is loaded");
 	  // Tinytest.add(true);
-	  var setes = new Setes();
-	  // var sdfs = new SetesV();
+		console.log(Meteor.settings);
+	  Setes.init();
+
 	});
 
   //Example of how to access the meteor settings
-	console.log(Meteor.settings);
 };

@@ -9,8 +9,6 @@ insecure
 less
 jquery
 ##limemakers:three
-infinitedg:three
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -24,4 +22,5 @@ ejson
 spacebars
 check
 iron:router
-app:setes
+standard-minifier-css
+standard-minifier-js

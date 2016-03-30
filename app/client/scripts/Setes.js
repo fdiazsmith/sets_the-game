@@ -7,12 +7,15 @@
 	* @class Setes
 	* @constructor
 	*/
+Setes = {
+	VERSION : "0.2",
+}
 
-Setes = function(){
+Setes.init = function(){
   //Public
 	self = this;
   self.board = new Board();
-
+	self.deck = new Deck();
   //Private
 
 
@@ -226,22 +229,22 @@ Setes = function(){
 	* @method method_name
 	* @param {String} - first_argument. sorting algorithm to choose from
 	*/
-Setes.prototype.method_name = function(first_argument) {
+Setes.method_name = function(first_argument) {
 	// body...
 };
 
  /**
 	* Find all possible permutations
 	* @method allPosiblePermutation
-	* @param {String} - choices. 
-	* @param {String} - con. 
-	* @param {String} - prefix. 
+	* @param {String} - choices.
+	* @param {String} - con.
+	* @param {String} - prefix.
 	*
 	*NOTE: The number of combinations of size r drawn from an input of size n is
   *      referred to as nCr, which is equal to n! ÷ [r!(n-r)!].
-	*/ 
+	*/
 
-Setes.prototype.allPosiblePermutation = function(choices, con, prefix) {
+Setes.allPosiblePermutation = function(choices, con, prefix) {
    numberOfCards++;
 
    // console.log(choices,choices.slice(1),(prefix || []).concat(choices[0][c]))
@@ -267,10 +270,10 @@ Setes.prototype.allPosiblePermutation = function(choices, con, prefix) {
 /**
 	* Find all possible combinations
 	* @method allPosibleCombinations
-	* @param {String} - base. 
-	* @param {String} - numberOfpicks. 
+	* @param {String} - base.
+	* @param {String} - numberOfpicks.
 	*/
-Setes.prototype.allPosibleCombinations =  function (base, numberOfpicks){
+Setes.allPosibleCombinations =  function (base, numberOfpicks){
    var r =[];
    var counter = 0;
    for (var i = base.length; i > 0  ; i--) {
@@ -289,11 +292,11 @@ Setes.prototype.allPosibleCombinations =  function (base, numberOfpicks){
  }
 
 /**
-	* 
+	*
 	* @method cartesian.
 	* @return {Int} - r.
 	*/
- Setes.prototype.cartesian =  function() {
+ Setes.cartesian =  function() {
    var r = [],
        arg = arguments, max = arg.length-1;
    function helper(arr, i) {
@@ -311,13 +314,13 @@ Setes.prototype.allPosibleCombinations =  function (base, numberOfpicks){
  }
 
 /**
-	* 
+	*
 	* @method multiply.
-	* @param {Int} - a. 
-	* @param {Int} - b. 
+	* @param {Int} - a.
+	* @param {Int} - b.
 	* @return {Int} - m.
 	*/
- Setes.prototype.multiply = function (a, b) {
+ Setes.multiply = function (a, b) {
    var aNumRows = a.length, aNumCols = a[0].length,
        bNumRows = b.length, bNumCols = b[0].length,
        m = new Array(aNumRows);  // initialize array of rows
@@ -332,4 +335,3 @@ Setes.prototype.allPosibleCombinations =  function (base, numberOfpicks){
    }
    return m;
  }
-

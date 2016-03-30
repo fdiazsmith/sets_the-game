@@ -1,0 +1,31 @@
+{
+  "name": "setes",
+  "version": "0.1",
+  "dependencies": {
+    "stats.js": "latest",
+    "dat-gui": "latest",
+    "threex.domevents": "latest",
+    "threex.objcoord": "latest",
+    "threex.rendererstats": "latest",
+    "threex.basiclighting": "latest",
+    "threex.solidwireframe": "latest",
+    "threex.keyboardstate": "latest",
+    "tweenjs": "latest",
+    "three.js": "git://github.com/mrdoob/three.js.git"
+  },
+  "install": {
+    "path": "../client/scripts/lib",
+    "sources": {
+      "three.js": "bower_components/three.js/build/three.min.js",
+      "stats.js": "bower_components/stats.js/build/stats.min.js",
+      "dat-gui": "bower_components/dat-gui/build/dat.gui.js",
+      "threex.domevents": "bower_components/threex.domevents/threex.domevents.js",
+      "threex.objcoord": "bower_components/threex.objcoord/threex.objcoord.js",
+      "threex.rendererstats": "bower_components/threex.rendererstats/threex.rendererstats.js",
+      "threex.basiclighting": "bower_components/threex.basiclighting/threex.basiclighting.js",
+      "threex.solidwireframe": "bower_components/threex.solidwireframe/threex.solidwireframe.js",
+      "threex.keyboardstate": "bower_components/threex.keyboardstate/threex.keyboardstate.js",
+      "tweenjs": "bower_components/tweenjs/src/Tween.js"
+    }
+  }
+}

@@ -4,29 +4,35 @@
 	* It creates and controls the self.scenes
 	* TODO:
 	* - [ ] Consider passing paremeters to the board
-	*
+	* - [ ] check this example : http://threejs.org/examples/#canvas_camera_orthographic
   * NOTE: Classes need to be declared as global for them to be "viewed" by other files.
 	* @class Board
 	* @constructor
 	*/
 
 Board = function(){
+	//Private
+	var container, stats;
+	var raycaster, renderer;
+
+	mouse = new THREE.Vector2();
+	INTERSECTED = false;
+
+	var radius = 500, theta = 0;
+	frustumSize = 1000;
+
 	//Public
 	self = this;
   self.camera;
   self.scene;
-  //Private
-  var container, stats;
-  var raycaster, renderer;
 
-  mouse = new THREE.Vector2();
-  INTERSECTED = false;
-
-  var radius = 500, theta = 0;
-  frustumSize = 1000;
 
   self.init();
   self.animate();
+
+	self.gui = new dat.GUI();
+
+	self.setUpGUI();
   console.log("Board initialized");
 };
 
@@ -38,32 +44,55 @@ Board = function(){
   */
 Board.prototype.init = function(first_argument) {
 
-  container = document.createElement( 'div' );
-  document.body.appendChild( container );
+		container = document.createElement( 'div' );
+		document.body.appendChild( container );
 
-  var aspect = window.innerWidth / window.innerHeight;
-  self.camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
-  self.camera.position.x = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
-  self.camera.position.y = 50;//radius * Math.sin( THREE.Math.degToRad( theta ) );
-  self.camera.position.z = 50;//radius * Math.cos( THREE.Math.degToRad( theta ) );
+		self.camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
+		self.camera.position.x = 200;
+		self.camera.position.y = 200;
+		self.camera.position.z = 200;
+		self.scene = new THREE.Scene();
 
-  self.scene = new THREE.Scene();
+		// Cubes
+		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		var material = new THREE.MeshLambertMaterial( { color: 0xff0000, overdraw: 0.5 } );
+
+			var cube = new THREE.Mesh( geometry, material );
+			cube.scale.y = Math.floor( Math.random() * 2 + 1 );
+			cube.position.x = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
+			cube.position.y = ( cube.scale.y * 50 ) / 2;
+			cube.position.z = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
+			self.scene.add( cube );
+
+		// Lights
+		var ambientLight = new THREE.AmbientLight( 0x404040 );
+		self.scene.add( ambientLight );
+		var directionalLight = new THREE.DirectionalLight( 0xffffff );
+		directionalLight.position.x = 100;
+		directionalLight.position.y = 100;
+		directionalLight.position.z = 200;
+		directionalLight.position.normalize();
+		self.scene.add( directionalLight );
+		var directionalLight = new THREE.DirectionalLight( 0xffffff );
+		directionalLight.position.x = -100;
+		directionalLight.position.y = -100;
+		directionalLight.position.z = -100;
+		directionalLight.position.normalize();
+		// self.scene.add( directionalLight );
 
 
+		renderer = new THREE.WebGLRenderer();
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		container.appendChild( renderer.domElement );
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		container.appendChild( stats.domElement );
+		//
+		// window.addEventListener( 'resize', onWindowResize, false );
 
-  raycaster = new THREE.Raycaster();
-
-  renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor( 0xf0f0f0 );
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.sortObjects = false;
-  container.appendChild(renderer.domElement);
-
-  stats = new Stats();
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.top = '0px';
-  container.appendChild( stats.domElement );
   //TODO: fix these reference error
   // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   // window.addEventListener( 'resize', onWindowResize, false );
@@ -108,7 +137,7 @@ Board.prototype.onDocumentMouseMove = function ( event ) {
   */
 Board.prototype.animate = function () {
 	requestAnimationFrame( self.animate );
-
+	stats.begin();
 	self.render();
 	stats.update();
 };
@@ -118,20 +147,25 @@ Board.prototype.animate = function () {
   * @method render
   */
 Board.prototype.render = function () {
+	var timer = Date.now() * 0.0001;
+	// self.camera.position.x = Math.cos( timer ) * 200;
+	// self.camera.position.z = Math.sin( timer ) * 200;
+	self.camera.lookAt( self.scene.position );
+	renderer.render( self.scene, self.camera );
 	// theta = 0.2;
 	// self.camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	// 	self.camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	// 	self.camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
 
-	self.camera.lookAt( self.scene.position );
-
-	self.camera.updateMatrixWorld();
-
-	// find intersections
-
-	raycaster.setFromCamera( mouse, self.camera );
-
-	var intersects = raycaster.intersectObjects( self.scene.children );
+	// self.camera.lookAt( self.scene.position );
+	//
+	// self.camera.updateMatrixWorld();
+	//
+	// // find intersections
+	//
+	// raycaster.setFromCamera( mouse, self.camera );
+	//
+	// var intersects = raycaster.intersectObjects( self.scene.children );
 
 	// if ( intersects.length > 0 ) {
 
@@ -153,11 +187,33 @@ Board.prototype.render = function () {
 
 	// }
 
-	renderer.render( self.scene, self.camera );
+	// renderer.render( self.scene, self.camera );
 
 };
 
+/**
+  * Dat GUI
+  * @method datGui
+  */
+Board.prototype.setUpGUI = function () {
 
+
+	var GUI_CONTENT = function(){
+		this.cam_x = 200;
+		this.cam_y = 200;
+		this.cam_z = 200;
+	}
+	self.guiVal = new GUI_CONTENT();
+
+	self.f1 = self.gui.addFolder('GENERAL');
+	self.f1.add(self.guiVal, "cam_x", -400, 400).name("Camera X").onChange(function(val){
+							self.camera.position.x = val; });
+	self.f1.add(self.guiVal, "cam_y", -400, 400).name("Camera Y").onChange(function(val){
+							self.camera.position.y = val; });
+	self.f1.add(self.guiVal, "cam_z", -400, 400).name("Camera Z").onChange(function(val){
+							self.camera.position.z = val; });
+	// self.f1.open();
+}
 /**
 	*________________________________________________________________________________
 	*/

@@ -5,7 +5,7 @@ Deck = function(){
   self.size = 81;
 
   // Private
-  console.log(self)
+
 
   dddd = new self.card(self.feature(1,1,0,0));
 
@@ -87,7 +87,7 @@ Deck.prototype.cube = function ( size ) {
 Deck.prototype.card = function(_f){
   console.log(_f);
   //create the background
-  this.radius = 35;
+  this.radius = 25;
   this.height = 10;
   this.segments = _f.shape == "circle"? 32 : _f.shape == "triangle" ? 3 :5;
 
@@ -97,12 +97,39 @@ Deck.prototype.card = function(_f){
   // it might be possible to do all three shapes with the cilinder
   // http://threejs.org/docs/index.html#Reference/Extras.Geometries/CylinderGeometry
   var geometry = new THREE.CylinderGeometry( this.radius, this.radius, this.height, this.segments );
-  var material = new THREE.MeshBasicMaterial( {color: 0xcccccc} );
+  var material = new THREE.MeshLambertMaterial( { color: 0xff00AA, overdraw: 0.5 } );
   var cylinder = new THREE.Mesh( geometry, material );
 
   //call the board scene. through prototypes!
   self.scene.add( cylinder );
   self.scene.add( background );
+
+  if(self.gui !== null){
+    var GUI_CONTENT_1 = function(){
+      this.radius = 35;
+      this.height = 200;
+      this.cam_z = 200;
+    }
+    self.guiVal_1 = new GUI_CONTENT_1();
+
+    self.f2 = self.gui.addFolder('CARD');
+    self.f2.add(self.guiVal_1, "radius", -1, 50).name("Camera X").onChange(function(val){
+                // geometry.x = val;
+                cylinder.geometry.parameters.radiusTop = val;
+                cylinder.geometry.uvsNeedUpdate = true;
+                cylinder.geometry.normalsNeedUpdate = true;
+                cylinder.geometry.verticesNeedUpdate = true;
+                cylinder.geometry.lineDistancesNeedUpdate = true;
+                cylinder.geometry.groupsNeedUpdate = true;
+                cylinder.geometry.elementsNeedUpdate = true;
+                console.log(cylinder.geometry)
+              });
+    self.f2.add(self.guiVal_1, "height", -400, 400).name("Camera Y").onChange(function(val){
+                self.camera.position.y = val; });
+    self.f2.add(self.guiVal_1, "cam_z", -400, 400).name("Camera Z").onChange(function(val){
+                self.camera.position.z = val; });
+    self.f2.open();
+  }
 }
 
 

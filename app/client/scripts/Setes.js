@@ -14,7 +14,7 @@ Setes = {
 Setes.init = function(){
   //Public
 	self = this;
-  self.board = new Board();
+  // self.board = new Board();
 	self.deck = new Deck();
   //Private
 

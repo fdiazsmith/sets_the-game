@@ -58,15 +58,15 @@ Board.prototype.init = function(first_argument) {
 		self.scene = new THREE.Scene();
 
 		// Cubes
-		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
-		var material = new THREE.MeshLambertMaterial( { color: 0xff0000, overdraw: 0.5 } );
-
-			var cube = new THREE.Mesh( geometry, material );
-			cube.scale.y = Math.floor( Math.random() * 2 + 1 );
-			cube.position.x = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
-			cube.position.y = ( cube.scale.y * 50 ) / 2;
-			cube.position.z = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
-			self.scene.add( cube );
+		// var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		// var material = new THREE.MeshLambertMaterial( { color: 0xff0000, overdraw: 0.5 } );
+		//
+		// 	var cube = new THREE.Mesh( geometry, material );
+		// 	cube.scale.y = Math.floor( Math.random() * 2 + 1 );
+		// 	cube.position.x = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
+		// 	cube.position.y = ( cube.scale.y * 50 ) / 2;
+		// 	cube.position.z = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
+		// 	self.scene.add( cube );
 
 		// Lights
 		var ambientLight = new THREE.AmbientLight( 0x404040 );
@@ -202,7 +202,7 @@ Board.prototype.render = function () {
 Board.prototype.setUpGUI = function () {
 	var GUI_CONTENT = function(){
 		this.cam_x = 0;
-		this.cam_y = 200;
+		this.cam_y = 0;
 		this.cam_z = 200;
 		this.light1_x = 100;
 		this.light1_y = 100;

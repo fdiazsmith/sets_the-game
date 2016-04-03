@@ -13,7 +13,7 @@
 Board = function(){
 	//Private
 	var container, stats;
-	var raycaster, renderer;
+	var raycaster;
 
 	mouse = new THREE.Vector2();
 	INTERSECTED = false;
@@ -26,13 +26,17 @@ Board = function(){
   self.camera;
   self.scene;
 
-
+	self.renderer;
   self.init();
   self.animate();
 
 	self.gui = new dat.GUI();
 
-	self.setUpGUI();
+	if(self.gui !== null ){
+		self.setUpGUI();
+		var axisHelper = new THREE.AxisHelper( 150 );
+		self.scene.add( axisHelper );
+	}
   console.log("Board initialized");
 };
 
@@ -48,8 +52,8 @@ Board.prototype.init = function(first_argument) {
 		document.body.appendChild( container );
 
 		self.camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
-		self.camera.position.x = 200;
-		self.camera.position.y = 200;
+		self.camera.position.x = 0;
+		self.camera.position.y = 0;
 		self.camera.position.z = 200;
 		self.scene = new THREE.Scene();
 
@@ -67,25 +71,25 @@ Board.prototype.init = function(first_argument) {
 		// Lights
 		var ambientLight = new THREE.AmbientLight( 0x404040 );
 		self.scene.add( ambientLight );
-		var directionalLight = new THREE.DirectionalLight( 0xffffff );
-		directionalLight.position.x = 100;
-		directionalLight.position.y = 100;
-		directionalLight.position.z = 200;
-		directionalLight.position.normalize();
-		self.scene.add( directionalLight );
-		var directionalLight = new THREE.DirectionalLight( 0xffffff );
-		directionalLight.position.x = -100;
-		directionalLight.position.y = -100;
-		directionalLight.position.z = -100;
-		directionalLight.position.normalize();
-		// self.scene.add( directionalLight );
+		self.directionalLight1 = new THREE.DirectionalLight( 0xffffff );
+		self.directionalLight1.position.x = 0;
+		self.directionalLight1.position.y = 0;
+		self.directionalLight1.position.z = 444;
+		self.directionalLight1.position.normalize();
+		self.scene.add( self.directionalLight1 );
+		self.directionalLight2 = new THREE.DirectionalLight( 0xffffff );
+		self.directionalLight2.position.x = -100;
+		self.directionalLight2.position.y = -100;
+		self.directionalLight2.position.z = -100;
+		self.directionalLight2.position.normalize();
+		// self.scene.add( self.directionalLight2 );
 
 
-		renderer = new THREE.WebGLRenderer();
-		renderer.setClearColor( 0xf0f0f0 );
-		renderer.setPixelRatio( window.devicePixelRatio );
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		container.appendChild( renderer.domElement );
+		self.renderer = new THREE.WebGLRenderer();
+		self.renderer.setClearColor( 0xf0f0f0 );
+		self.renderer.setPixelRatio( window.devicePixelRatio );
+		self.renderer.setSize( window.innerWidth, window.innerHeight );
+		container.appendChild( self.renderer.domElement );
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
@@ -115,7 +119,7 @@ Board.prototype.onWindowResize = function onWindowResize() {
 
 	self.camera.updateProjectionMatrix();
 
-	renderer.setSize( window.innerWidth, window.innerHeight );
+	self.renderer.setSize( window.innerWidth, window.innerHeight );
 };
 
 /**
@@ -151,7 +155,7 @@ Board.prototype.render = function () {
 	// self.camera.position.x = Math.cos( timer ) * 200;
 	// self.camera.position.z = Math.sin( timer ) * 200;
 	self.camera.lookAt( self.scene.position );
-	renderer.render( self.scene, self.camera );
+	self.renderer.render( self.scene, self.camera );
 	// theta = 0.2;
 	// self.camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	// 	self.camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
@@ -187,7 +191,7 @@ Board.prototype.render = function () {
 
 	// }
 
-	// renderer.render( self.scene, self.camera );
+	// self.renderer.render( self.scene, self.camera );
 
 };
 
@@ -196,23 +200,43 @@ Board.prototype.render = function () {
   * @method datGui
   */
 Board.prototype.setUpGUI = function () {
-
-
 	var GUI_CONTENT = function(){
-		this.cam_x = 200;
+		this.cam_x = 0;
 		this.cam_y = 200;
 		this.cam_z = 200;
+		this.light1_x = 100;
+		this.light1_y = 100;
+		this.light1_z = 100;
+		this.light2_x = 100;
+		this.light2_y = 100;
+		this.light2_z = 100;
+
 	}
 	self.guiVal = new GUI_CONTENT();
 
-	self.f1 = self.gui.addFolder('GENERAL');
+	self.f1 = self.gui.addFolder('CAMERA');
 	self.f1.add(self.guiVal, "cam_x", -400, 400).name("Camera X").onChange(function(val){
 							self.camera.position.x = val; });
 	self.f1.add(self.guiVal, "cam_y", -400, 400).name("Camera Y").onChange(function(val){
 							self.camera.position.y = val; });
 	self.f1.add(self.guiVal, "cam_z", -400, 400).name("Camera Z").onChange(function(val){
 							self.camera.position.z = val; });
-	// self.f1.open();
+
+	self.f13 = self.gui.addFolder('LIGHTS');
+	self.f13.add(self.guiVal, "light1_x", -400, 400).name("Light X").onChange(function(val){ console.log(self.directionalLight1)
+							self.directionalLight1.position.x = val; });
+	self.f13.add(self.guiVal, "light1_y", -400, 400).name("Light Y").onChange(function(val){
+							self.directionalLight1.position.y = val; });
+	self.f13.add(self.guiVal, "light1_z", -400, 400).name("Light Z").onChange(function(val){
+							self.directionalLight1.position.z = val; });
+	self.f13.add(self.guiVal, "light2_x", -400, 400).name("Light X").onChange(function(val){
+							self.directionalLight2.position.x = val; });
+	self.f13.add(self.guiVal, "light2_y", -400, 400).name("Light Y").onChange(function(val){
+							self.directionalLight2.position.y = val; });
+	self.f13.add(self.guiVal, "light2_z", -400, 400).name("Light Z").onChange(function(val){
+							self.directionalLight2.position.z = val; });
+
+	// self.f13.open();
 }
 /**
 	*________________________________________________________________________________
@@ -349,11 +373,11 @@ function initStats() {
     return stats;
 }
 function initRendererStats(){
-	rendererStats   = new THREEx.RendererStats()
-	rendererStats.domElement.style.position = 'absolute'
-	rendererStats.domElement.style.left = '0px'
-	rendererStats.domElement.style.bottom   = '0px'
-	document.body.appendChild( rendererStats.domElement )
+	self.rendererStats   = new THREEx.RendererStats()
+	self.rendererStats.domElement.style.position = 'absolute'
+	self.rendererStats.domElement.style.left = '0px'
+	self.rendererStats.domElement.style.bottom   = '0px'
+	document.body.appendChild( self.rendererStats.domElement )
 }
 // handle keydown, return early if event is an autorepeat
 	// keyboard.domElement.addEventListener('keydown', function(event){

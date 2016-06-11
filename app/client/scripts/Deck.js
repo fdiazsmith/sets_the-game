@@ -7,7 +7,7 @@ Deck = function(){
   // Private
 
 
-  dddd = new self.card(self.feature(1,0,0,2));
+  dddd = new self.card(self.feature(1,0,1,2));
 
 
   console.log("Created new Deck");
